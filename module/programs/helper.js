@@ -126,7 +126,7 @@ module.exports = class ProgramsHelper {
         _.assign(programData, {
           ...data,
         });
-        
+        programData = _.omit(programData, ["scope", "userId"]);
         console.log(programData,'programData')
 
         let program = await database.models.programs.create(
@@ -145,7 +145,7 @@ module.exports = class ProgramsHelper {
             program._id,
             data.scope
           );
-
+          console.log(programScopeUpdated,'programScopeUpdated')
           if( !programScopeUpdated.success ) {
             throw {
               message : constants.apiResponses.SCOPE_NOT_UPDATED_IN_PROGRAM
@@ -337,6 +337,7 @@ module.exports = class ProgramsHelper {
         });
 
       } catch (error) {
+        console.log(error)
           return reject(error);
       }
 
