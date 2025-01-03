@@ -38,6 +38,11 @@ module.exports = function () {
     dirname: ROOT_PATH + "/models",
     filter: /(.+)\.js$/,
     resolve: function (Model) {
+      console.log(Model.name, 'Model.name')
+      console.log(Model.name == 'programs', 'Model.name == programs')
+      if(Model.name == 'programs'){
+        console.log(Model.schema.scope.roles, 'Model.schema')
+      }
       return Model;
     }
   });
