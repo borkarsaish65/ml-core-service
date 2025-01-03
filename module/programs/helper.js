@@ -127,6 +127,8 @@ module.exports = class ProgramsHelper {
           ...data,
         });
         
+        console.log(programData,'programData')
+
         let program = await database.models.programs.create(
           programData
         );
