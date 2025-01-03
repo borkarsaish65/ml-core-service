@@ -328,7 +328,7 @@ module.exports = class ProgramsHelper {
           },
           { $set : { scope : scope }},{ new: true }
         ).lean();
-
+        console.log(updateProgram, "updateProgram");
         if( !updateProgram._id ) {
           throw {
             status : constants.apiResponses.PROGRAM_SCOPE_NOT_ADDED
