@@ -218,7 +218,9 @@ module.exports = class ProgramsHelper {
 
       try {
 
-        let programData = await this.programDocuments({ _id : programId },["_id"]);
+        let programData = await this.programDocuments({ _id : programId });
+
+        console.log(programData,'programData');
 
         if( !programData.length > 0 ) {
           return resolve({
