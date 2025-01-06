@@ -320,6 +320,8 @@ module.exports = class ProgramsHelper {
         }
 
         console.log(scope, "scope");
+        console.log('scope.roles:', JSON.stringify(scope.roles, null, 2));
+
         let updateProgram = 
         await database.models.programs.findOneAndUpdate(
           {
