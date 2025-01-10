@@ -8,7 +8,6 @@
 
 //dependencies
 const mongoose = require("mongoose");
-mongoose.set('debug', true);
 const mongooseDelete = require("mongoose-delete");
 const mongooseAutoPopulate = require("mongoose-autopopulate");
 const mongooseTimeStamp = require("mongoose-timestamp");
