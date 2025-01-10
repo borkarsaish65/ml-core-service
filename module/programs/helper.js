@@ -136,13 +136,13 @@ module.exports = class ProgramsHelper {
           };
         }
         
-        if( data.scope && false ) {
+        if( data.scope ) {
           
           let programScopeUpdated = await this.setScope(
             program._id,
             data.scope
           );
-          console.log(programScopeUpdated,'programScopeUpdated')
+
           if( !programScopeUpdated.success ) {
             throw {
               message : constants.apiResponses.SCOPE_NOT_UPDATED_IN_PROGRAM
@@ -209,25 +209,23 @@ module.exports = class ProgramsHelper {
    * @returns {JSON} - Set scope data.
    */
 
-  static setScope( programId,scopeData ) {
+    static setScope( programId,scopeData ) {
 
-    return new Promise(async (resolve, reject) => {
-
-      try {
-
-        let programData = await this.programDocuments({ _id : programId });
-
-        console.log(programData,'programData');
-
-        if( !programData.length > 0 ) {
-          return resolve({
-            status : httpStatusCode.bad_request.status,
-            message : constants.apiResponses.PROGRAM_NOT_FOUND
-          });
-        }
-
-        let scope = {};
-        if(false){
+      return new Promise(async (resolve, reject) => {
+  
+        try {
+  
+          let programData = await this.programDocuments({ _id : programId },["_id"]);
+  
+          if( !programData.length > 0 ) {
+            return resolve({
+              status : httpStatusCode.bad_request.status,
+              message : constants.apiResponses.PROGRAM_NOT_FOUND
+            });
+          }
+  
+          let scope = {};
+  
           if( scopeData.entityType ) {
             // Get entity details of type {scopeData.entityType}
             let bodyData = {
@@ -314,40 +312,33 @@ module.exports = class ProgramsHelper {
               }
             }
           }
-        }else{
-          scope = scopeData;
+  
+          let updateProgram = 
+          await database.models.programs.findOneAndUpdate(
+            {
+              _id : programId
+            },
+            { $set : { scope : scope }},{ new: true }
+          ).lean();
+  
+          if( !updateProgram._id ) {
+            throw {
+              status : constants.apiResponses.PROGRAM_SCOPE_NOT_ADDED
+            };
+          }
+  
+          return resolve({
+            success : true,
+            message : constants.apiResponses.PROGRAM_UPDATED_SUCCESSFULLY,
+            data : updateProgram
+          });
+  
+        } catch (error) {
+            return reject(error);
         }
-
-        console.log(scope, "scope");
-        console.log('scope.roles:', JSON.stringify(scope.roles, null, 2));
-
-        let updateProgram = 
-        await database.models.programs.findOneAndUpdate(
-          {
-            _id : programId
-          },
-          { $set : { scope : scope }},{ new: true }
-        ).lean();
-        console.log(updateProgram, "updateProgram");
-        if( !updateProgram._id ) {
-          throw {
-            status : constants.apiResponses.PROGRAM_SCOPE_NOT_ADDED
-          };
-        }
-
-        return resolve({
-          success : true,
-          message : constants.apiResponses.PROGRAM_UPDATED_SUCCESSFULLY,
-          data : updateProgram
-        });
-
-      } catch (error) {
-        console.log(error)
-          return reject(error);
-      }
-
-    })
-  }
+  
+      })
+    }
 
    /**
    * Update program
