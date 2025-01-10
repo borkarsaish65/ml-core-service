@@ -126,9 +126,8 @@ module.exports = class ProgramsHelper {
         _.assign(programData, {
           ...data,
         });
+        
         programData = _.omit(programData, ["scope", "userId"]);
-        console.log(programData,'programData')
-
         let program = await database.models.programs.create(
           programData
         );
@@ -139,7 +138,7 @@ module.exports = class ProgramsHelper {
           };
         }
         
-        if( data.scope ) {
+        if( data.scope && false ) {
           
           let programScopeUpdated = await this.setScope(
             program._id,
