@@ -11,8 +11,6 @@ const entityTypesHelper = require(MODULES_BASE_PATH + "/entityTypes/helper");
 const entitiesHelper = require(MODULES_BASE_PATH + "/entities/helper");
 const userRolesHelper = require(MODULES_BASE_PATH + "/user-roles/helper");
 const userService = require(ROOT_PATH + "/generics/services/users");
-const timeZoneDifference =
-  process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC;
 /**
     * ProgramsHelper
     * @class
@@ -112,13 +110,13 @@ module.exports = class ProgramsHelper {
           if (data.hasOwnProperty("endDate")) {
             data.endDate = gen.utils.getEndDate(
               data.endDate,
-              timeZoneDifference
+              process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC
             );
           }
           if (data.hasOwnProperty("startDate")) {
             data.startDate = gen.utils.getStartDate(
               data.startDate,
-              timeZoneDifference
+              process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC
             );
           }
         }
@@ -366,13 +364,13 @@ module.exports = class ProgramsHelper {
           if (data.hasOwnProperty("endDate")) {
             data.endDate = gen.utils.getEndDate(
               data.endDate,
-              timeZoneDifference
+              process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC
             );
           }
           if (data.hasOwnProperty("startDate")) {
             data.startDate = gen.utils.getStartDate(
               data.startDate,
-              timeZoneDifference
+              process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC
             );
           }
         }

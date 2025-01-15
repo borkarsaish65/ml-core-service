@@ -190,6 +190,11 @@ let enviromentVariables = {
       "value" : "OCI"
     }
   }, 
+  "TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC" : {
+    "message" : "Required timezone difference between local time and UTC",
+    "optional" : true,
+    "default": "+05:30"
+  }
 }
 
 let success = true;
