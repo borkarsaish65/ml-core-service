@@ -436,9 +436,31 @@ module.exports = class ProgramsHelper {
 
       try {
 
+        const moment = require('moment');
+
+// Create a moment object for the current time
+let currentMoment = moment();
+
+// Convert timeZoneDifference to the total minutes (e.g. +5:30 -> 330 minutes)
+console.log(timeZoneDifference,'timeZoneDifference')
+const [sign, hours, minutes] = timeZoneDifference.match(/([+-])(\d{2}):(\d{2})/).slice(1);
+const totalMinutes = (parseInt(hours) * 60 + parseInt(minutes)) * (sign === '+' ? 1 : -1);
+
+var responseDate = moment().utcOffset(timeZoneDifference).format('DD/MM/YYYY');
+console.log(responseDate,'responseDate')
+// Adjust the moment object by the time zone difference
+let adjustedMoment = currentMoment.utcOffset(timeZoneDifference);
+console.log(adjustedMoment,'adjustedMoment')
+// Print the adjusted moment
+console.log(adjustedMoment.format('MM/DD/YYYY'));  // or use .format("YYYY-MM-DD HH:mm:ss") for specific format
+
+console.log(stopppppppppppp)
         let programDocument = [];
 
-        let matchQuery = { status : constants.common.ACTIVE };
+        let matchQuery = { status : constants.common.ACTIVE,
+          startDate: { $gt: new Date() },
+          endDate: { $lt: new Date() }
+         };
 
         if( Object.keys(filter).length > 0 ) {
           matchQuery = _.merge(matchQuery,filter);
@@ -500,6 +522,8 @@ module.exports = class ProgramsHelper {
        
         programDocument.push({ $match : matchQuery }, sortQuery,{ $project : projection1 }, facetQuery, projection2);
        
+        console.log(programDocument[0], "programDocument");
+
         let programDocuments = 
         await database.models.programs.aggregate(programDocument);
 
