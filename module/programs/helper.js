@@ -433,32 +433,9 @@ module.exports = class ProgramsHelper {
     return new Promise( async (resolve, reject) => {
 
       try {
-
-        const moment = require('moment');
-
-// Create a moment object for the current time
-let currentMoment = moment();
-
-// Convert timeZoneDifference to the total minutes (e.g. +5:30 -> 330 minutes)
-
-const [sign, hours, minutes] = timeZoneDifference.match(/([+-])(\d{2}):(\d{2})/).slice(1);
-const totalMinutes = (parseInt(hours) * 60 + parseInt(minutes)) * (sign === '+' ? 1 : -1);
-
-var responseDate = moment().utcOffset(timeZoneDifference).format('DD/MM/YYYY');
-
-// Adjust the moment object by the time zone difference
-let adjustedMoment = currentMoment.utcOffset(timeZoneDifference);
-
-// Print the adjusted moment
-
-
-
         let programDocument = [];
 
-        let matchQuery = { status : constants.common.ACTIVE,
-          startDate: { $gt: new Date() },
-          endDate: { $lt: new Date() }
-         };
+        let matchQuery = { status: constants.common.ACTIVE };
 
         if( Object.keys(filter).length > 0 ) {
           matchQuery = _.merge(matchQuery,filter);

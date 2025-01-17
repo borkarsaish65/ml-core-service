@@ -16,7 +16,6 @@ const userExtensionsHelperV2 = require(MODULES_BASE_PATH + "/user-extension/help
 const userService = require(ROOT_PATH + "/generics/services/users");
 const timeZoneDifference =
   process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC;
-  const moment = require('moment');
 /**
     * SolutionsHelper
     * @class
