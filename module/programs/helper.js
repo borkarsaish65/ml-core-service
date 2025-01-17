@@ -440,19 +440,19 @@ module.exports = class ProgramsHelper {
 let currentMoment = moment();
 
 // Convert timeZoneDifference to the total minutes (e.g. +5:30 -> 330 minutes)
-console.log(timeZoneDifference,'timeZoneDifference')
+
 const [sign, hours, minutes] = timeZoneDifference.match(/([+-])(\d{2}):(\d{2})/).slice(1);
 const totalMinutes = (parseInt(hours) * 60 + parseInt(minutes)) * (sign === '+' ? 1 : -1);
 
 var responseDate = moment().utcOffset(timeZoneDifference).format('DD/MM/YYYY');
-console.log(responseDate,'responseDate')
+
 // Adjust the moment object by the time zone difference
 let adjustedMoment = currentMoment.utcOffset(timeZoneDifference);
-console.log(adjustedMoment,'adjustedMoment')
-// Print the adjusted moment
-console.log(adjustedMoment.format('MM/DD/YYYY'));  // or use .format("YYYY-MM-DD HH:mm:ss") for specific format
 
-console.log(stopppppppppppp)
+// Print the adjusted moment
+
+
+
         let programDocument = [];
 
         let matchQuery = { status : constants.common.ACTIVE,
@@ -520,7 +520,7 @@ console.log(stopppppppppppp)
        
         programDocument.push({ $match : matchQuery }, sortQuery,{ $project : projection1 }, facetQuery, projection2);
        
-        console.log(programDocument[0], "programDocument");
+        
 
         let programDocuments = 
         await database.models.programs.aggregate(programDocument);
@@ -553,7 +553,7 @@ console.log(stopppppppppppp)
    * @returns {JSON} - List of programs based on role and location.
    */
 
-  static forUserRoleAndLocation( bodyData, pageSize, pageNo,searchText = "" ) {
+  static forUserRoleAndLocation( bodyData, pageSize, pageNo,searchText = "",programId = "" ) {
 
     return new Promise(async (resolve, reject) => {
 
@@ -567,6 +567,9 @@ console.log(stopppppppppppp)
           return resolve(queryData);
         }
         
+        if (programId !== "") {
+          queryData.data._id = gen.utils.convertStringToObjectId(programId);
+        }
         queryData.data.startDate = { $lte: new Date() };
         queryData.data.endDate = { $gte: new Date() };
 

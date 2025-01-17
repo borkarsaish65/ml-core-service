@@ -922,7 +922,8 @@ module.exports = class SolutionsHelper {
             "language",
             "creator",
             "link",
-            "certificateTemplateId"
+            "certificateTemplateId",
+            "endDate"
           ]
         );
         
