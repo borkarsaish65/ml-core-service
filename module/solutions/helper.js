@@ -16,6 +16,7 @@ const userExtensionsHelperV2 = require(MODULES_BASE_PATH + "/user-extension/help
 const userService = require(ROOT_PATH + "/generics/services/users");
 const timeZoneDifference =
   process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC;
+  const moment = require('moment');
 /**
     * SolutionsHelper
     * @class
@@ -711,10 +712,20 @@ module.exports = class SolutionsHelper {
             matchQuery["$or"] = [];
   
             targetedTypes.forEach( type => {
-              
-              let singleType = {
-                type : type
-              };
+              let singleType = {};
+              if (type === constants.common.SURVEY) {
+                singleType = {
+                  type: type,
+                };
+                const currentDate = new Date();
+                currentDate.setDate(currentDate.getDate() - 15);
+                singleType["endDate"] = { $gte: currentDate };
+              } else {
+                singleType = {
+                  type: type,
+                };
+                singleType["endDate"] = { $gte: new Date() };
+              }
   
               if( type === constants.common.IMPROVEMENT_PROJECT ) {
                 singleType["projectTemplateId"] = { $exists : true };
@@ -727,7 +738,15 @@ module.exports = class SolutionsHelper {
             if( type !== "" ) {
               matchQuery["type"] = type;
             }
-        
+
+            if (type === constants.common.SURVEY) {
+              const currentDate = new Date();
+              currentDate.setDate(currentDate.getDate() - 15);
+              matchQuery["endDate"] = { $gte: currentDate };
+            } else {
+              matchQuery["endDate"] = { $gte: new Date() };
+            }
+
             if( subType !== "" ) {
               matchQuery["subType"] = subType;
             }
@@ -736,6 +755,8 @@ module.exports = class SolutionsHelper {
           if ( programId !== "" ) {
             matchQuery["programId"] = ObjectId(programId);
           }
+          
+          matchQuery["startDate"] = { $lte: new Date() };
           
           let targetedSolutions = await this.list(
             type,

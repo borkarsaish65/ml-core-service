@@ -566,6 +566,9 @@ console.log(stopppppppppppp)
         if( !queryData.success ) {
           return resolve(queryData);
         }
+        
+        queryData.data.startDate = { $lte: new Date() };
+        queryData.data.endDate = { $gte: new Date() };
 
         let targetedPrograms = await this.list(
           pageNo,
