@@ -184,7 +184,7 @@ module.exports = class SolutionsHelper {
             if (solutionData.hasOwnProperty("endDate")) {
               solutionData.endDate = gen.utils.getEndDate(
                 solutionData.endDate,
-                timeZoneDifference
+                process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC
               );
               if (solutionData.endDate > programData[0].endDate) {
                 solutionData.endDate = programData[0].endDate;
@@ -193,7 +193,7 @@ module.exports = class SolutionsHelper {
             if (solutionData.hasOwnProperty("startDate")) {
               solutionData.startDate = gen.utils.getStartDate(
                 solutionData.startDate,
-                timeZoneDifference
+                process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC
               );
               if (solutionData.startDate < programData[0].startDate) {
                 solutionData.startDate = programData[0].startDate;
@@ -462,7 +462,7 @@ module.exports = class SolutionsHelper {
             if (solutionData.hasOwnProperty("endDate")) {
               solutionData.endDate = gen.utils.getEndDate(
                 solutionData.endDate,
-                timeZoneDifference
+                process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC
               );
               if (solutionData.endDate > programData[0].endDate) {
                 solutionData.endDate = programData[0].endDate;
@@ -471,7 +471,7 @@ module.exports = class SolutionsHelper {
             if (solutionData.hasOwnProperty("startDate")) {
               solutionData.startDate = gen.utils.getStartDate(
                 solutionData.startDate,
-                timeZoneDifference
+                process.env.TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC
               );
               if (solutionData.startDate < programData[0].startDate) {
                 solutionData.startDate = programData[0].startDate;
