@@ -826,8 +826,10 @@ module.exports = class SolutionsHelper {
           }
         }
         
+        let caseInsensitiveRoles = [constants.common.ALL_ROLES,...data.role.split(",")].map(role => new RegExp(`^${role}$`, "i"));
+
         let filterQuery = {
-          "scope.roles.code" : { $in : [constants.common.ALL_ROLES,...data.role.split(",")] },
+          "scope.roles.code" : { $in : caseInsensitiveRoles },
           "scope.entities" : { $in : registryIds },
           "scope.entityType" : { $in : entityTypes },
           "isReusable" : false,
